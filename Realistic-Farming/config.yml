@@ -1,0 +1,9 @@
+hoeing:
+  time: 5 #in seconds
+  messages:
+    start:
+      enabled: true
+      message: "&cHoeing started, do not move!"
+    cancelled:
+      enabled: true
+      message: "&4You moved, hoeing cancelled!"

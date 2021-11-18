@@ -10,6 +10,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import net.md_5.bungee.api.ChatColor;
@@ -25,30 +26,44 @@ public class HoeEvent implements Listener {
 		
 		Player p = e.getPlayer();
 		Block b = e.getClickedBlock();
+		ItemStack item = e.getItem();
 		
-		if(b != null) {
+		if(b != null && item != null) {
 			
 			if(b.getType().equals(Material.GRASS) || 
 					(b.getType().equals(Material.DIRT) && 
 							(b.getData() == 0 || b.getData() == 1))) 
 			{
 				
-				e.setCancelled(true);
-				
-				p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&cHoeing started, do not move!"));
-				
-				ids.put(p, new BukkitRunnable() {
+				if(item.getType().equals(Material.WOOD_HOE) || item.getType().equals(Material.STONE_HOE) || item.getType().equals(Material.IRON_HOE) || item.getType().equals(Material.GOLD_HOE) || item.getType().equals(Material.DIAMOND_HOE)) {
 					
-					@Override
-					public void run() {
+					if(RealisticFarming.getInstance().getConfig().getInt("hoeing.time") != 0) {
 						
-						b.setType(Material.SOIL);
+						e.setCancelled(true);
 						
-						ids.remove(p);
+						if(!ids.containsKey(p)) {
+							
+							if(RealisticFarming.getInstance().getConfig().getBoolean("hoeing.messages.start.enabled"))
+								p.sendMessage(ChatColor.translateAlternateColorCodes('&', RealisticFarming.getInstance().getConfig().getString("hoeing.messages.start.message")));
+							
+							ids.put(p, new BukkitRunnable() {
+								
+								@Override
+								public void run() {
+									
+									b.setType(Material.SOIL);
+									
+									ids.remove(p);
+									
+								}
+								
+							}.runTaskLater(RealisticFarming.getInstance(), RealisticFarming.getInstance().getConfig().getInt("hoeing.time") * 20).getTaskId());
+							
+						}
 						
 					}
 					
-				}.runTaskLater(RealisticFarming.getInstance(), 2 * 20).getTaskId());
+				}
 				
 			}
 			 
@@ -62,8 +77,8 @@ public class HoeEvent implements Listener {
 		Player p = e.getPlayer();
 		
 		if(ids.containsKey(p)) {
-			
-			p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&4You moved, hoeing cancelled!"));
+			if(RealisticFarming.getInstance().getConfig().getBoolean("hoeing.messages.cancelled.enabled"))
+				p.sendMessage(ChatColor.translateAlternateColorCodes('&', RealisticFarming.getInstance().getConfig().getString("hoeing.messages.cancelled.message")));
 			
 			Bukkit.getScheduler().cancelTask(ids.get(p));
 			

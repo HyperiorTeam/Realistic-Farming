@@ -16,6 +16,14 @@ public class RealisticFarming extends JavaPlugin {
 		
 		registerEvents();
 		
+		if(!getDataFolder().exists()) {
+			
+			getDataFolder().mkdirs();
+			
+		}
+		
+		saveDefaultConfig();
+		
 	}
 	
 	public static RealisticFarming getInstance() {
