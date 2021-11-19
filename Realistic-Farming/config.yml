@@ -1,4 +1,6 @@
 hoeing:
+  enabled: true
+  cancel-on-move: true
   time: 5 #in seconds
   messages:
     start:
@@ -7,3 +9,9 @@ hoeing:
     cancelled:
       enabled: true
       message: "&4You moved, hoeing cancelled!"
+
+bone-meal:
+  enabled: true #note: this won't affect non-farming blocks (ex. saplings)
+  crops-enabled: true #wheat seeds
+  pumpkin-stem: true
+  melon-stem: true

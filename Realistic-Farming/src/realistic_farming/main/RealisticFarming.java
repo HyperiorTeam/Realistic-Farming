@@ -4,6 +4,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import realistic_farming.events.GrowEvents;
 import realistic_farming.events.HoeEvent;
 
 public class RealisticFarming extends JavaPlugin {
@@ -37,6 +38,7 @@ public class RealisticFarming extends JavaPlugin {
 		PluginManager pm = Bukkit.getPluginManager();
 		
 		pm.registerEvents(new HoeEvent(), this);
+		pm.registerEvents(new GrowEvents(), this);
 		
 	}
 	

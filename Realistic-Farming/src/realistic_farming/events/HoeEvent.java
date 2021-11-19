@@ -24,49 +24,54 @@ public class HoeEvent implements Listener {
 	@EventHandler
 	public void onInteract(PlayerInteractEvent e) {
 		
-		Player p = e.getPlayer();
-		Block b = e.getClickedBlock();
-		ItemStack item = e.getItem();
-		
-		if(b != null && item != null) {
+		if(RealisticFarming.getInstance().getConfig().getBoolean("hoeing.enabled") && !e.isCancelled()) {
 			
-			if(b.getType().equals(Material.GRASS) || 
-					(b.getType().equals(Material.DIRT) && 
-							(b.getData() == 0 || b.getData() == 1))) 
-			{
+			Block b = e.getClickedBlock();
+			ItemStack item = e.getItem();
+			
+			if(b != null && item != null) {
 				
-				if(item.getType().equals(Material.WOOD_HOE) || item.getType().equals(Material.STONE_HOE) || item.getType().equals(Material.IRON_HOE) || item.getType().equals(Material.GOLD_HOE) || item.getType().equals(Material.DIAMOND_HOE)) {
+				Player p = e.getPlayer();
+				
+				if(b.getType().equals(Material.GRASS) || 
+						(b.getType().equals(Material.DIRT) && 
+								(b.getData() == 0 || b.getData() == 1))) 
+				{
 					
-					if(RealisticFarming.getInstance().getConfig().getInt("hoeing.time") != 0) {
+					if(item.getType().equals(Material.WOOD_HOE) || item.getType().equals(Material.STONE_HOE) || item.getType().equals(Material.IRON_HOE) || item.getType().equals(Material.GOLD_HOE) || item.getType().equals(Material.DIAMOND_HOE)) {
 						
-						e.setCancelled(true);
-						
-						if(!ids.containsKey(p)) {
+						if(RealisticFarming.getInstance().getConfig().getInt("hoeing.time") != 0) {
 							
-							if(RealisticFarming.getInstance().getConfig().getBoolean("hoeing.messages.start.enabled"))
-								p.sendMessage(ChatColor.translateAlternateColorCodes('&', RealisticFarming.getInstance().getConfig().getString("hoeing.messages.start.message")));
+							e.setCancelled(true);
 							
-							ids.put(p, new BukkitRunnable() {
+							if(!ids.containsKey(p)) {
 								
-								@Override
-								public void run() {
-									
-									b.setType(Material.SOIL);
-									
-									ids.remove(p);
-									
-								}
+								if(RealisticFarming.getInstance().getConfig().getBoolean("hoeing.messages.start.enabled") && RealisticFarming.getInstance().getConfig().getBoolean("hoeing.cancel-on-move"))
+									p.sendMessage(ChatColor.translateAlternateColorCodes('&', RealisticFarming.getInstance().getConfig().getString("hoeing.messages.start.message")));
 								
-							}.runTaskLater(RealisticFarming.getInstance(), RealisticFarming.getInstance().getConfig().getInt("hoeing.time") * 20).getTaskId());
+								ids.put(p, new BukkitRunnable() {
+									
+									@Override
+									public void run() {
+										
+										b.setType(Material.SOIL);
+										
+										ids.remove(p);
+										
+									}
+									
+								}.runTaskLater(RealisticFarming.getInstance(), RealisticFarming.getInstance().getConfig().getInt("hoeing.time") * 20).getTaskId());
+								
+							}
 							
 						}
 						
 					}
 					
 				}
-				
+				 
 			}
-			 
+			
 		}
 		
 	}
@@ -74,15 +79,19 @@ public class HoeEvent implements Listener {
 	@EventHandler
 	public void onMove(PlayerMoveEvent e) {
 		
-		Player p = e.getPlayer();
-		
-		if(ids.containsKey(p)) {
-			if(RealisticFarming.getInstance().getConfig().getBoolean("hoeing.messages.cancelled.enabled"))
-				p.sendMessage(ChatColor.translateAlternateColorCodes('&', RealisticFarming.getInstance().getConfig().getString("hoeing.messages.cancelled.message")));
+		if(RealisticFarming.getInstance().getConfig().getBoolean("hoeing.cancel-on-move") && RealisticFarming.getInstance().getConfig().getBoolean("hoeing.enabled")) {
 			
-			Bukkit.getScheduler().cancelTask(ids.get(p));
+			Player p = e.getPlayer();
 			
-			ids.remove(e.getPlayer());
+			if(ids.containsKey(p)) {
+				if(RealisticFarming.getInstance().getConfig().getBoolean("hoeing.messages.cancelled.enabled"))
+					p.sendMessage(ChatColor.translateAlternateColorCodes('&', RealisticFarming.getInstance().getConfig().getString("hoeing.messages.cancelled.message")));
+				
+				Bukkit.getScheduler().cancelTask(ids.get(p));
+				
+				ids.remove(e.getPlayer());
+				
+			}
 			
 		}
 		
