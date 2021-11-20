@@ -6,7 +6,6 @@ import java.util.UUID;
 import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.block.Block;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -39,25 +38,33 @@ public class SprinklerUtils {
 		
 	}
 	
-	public static void SpawnSprinkler(Block b) {
+	public static void SpawnSprinkler(String id, Location l) {
 		
-		b.setType(Material.AIR);
+		l.getBlock().setType(Material.AIR);
 		
-		ArmorStand sprinkler = (ArmorStand) b.getWorld().spawnEntity(b.getLocation().add(0.5, -0.70, 0.5), EntityType.ARMOR_STAND);
+		ArmorStand sprinkler = (ArmorStand) l.getWorld().spawnEntity(l.clone().add(0.5, -0.70, 0.5), EntityType.ARMOR_STAND);
 		
 		sprinkler.setSmall(true);
 		sprinkler.setVisible(false);
 		sprinkler.setGravity(false);
+		sprinkler.setCustomName("Sprinkler ID: " + id);
 		
 		sprinkler.setHelmet(new ItemStack(Material.IRON_BLOCK));
 		
-		ArmorStand rotator = (ArmorStand) b.getWorld().spawnEntity(b.getLocation().add(0.5, -1, 0.5), EntityType.ARMOR_STAND);
+		ArmorStand rotator = (ArmorStand) l.getWorld().spawnEntity(l.clone().add(0.5, -1, 0.5), EntityType.ARMOR_STAND);
 		
 		rotator.setVisible(false);
 		rotator.setGravity(false);
 		rotator.setHelmet(new ItemStack(Material.LEVER));
+		rotator.setCustomName("Sprinkler ID: " + id);
 		
 		rotator.setHeadPose(new EulerAngle(Math.toRadians(67.5), 0, 0));
+		
+		anim(sprinkler, rotator, l);
+		
+	}
+	
+	public static void anim(ArmorStand sprinkler, ArmorStand rotator, Location l) {
 		
 		new BukkitRunnable() {
 			
@@ -66,9 +73,9 @@ public class SprinklerUtils {
 				
 				for(float i = 0; i < 3; i+=0.25) {
 					
-					Location spawnLoc = new Location(b.getWorld(), rotator.getLocation().getX() + Math.sin(rotator.getHeadPose().getY()) * i * -1, rotator.getLocation().getY() + 1.5, rotator.getLocation().getZ() + Math.cos(rotator.getHeadPose().getY()) * i);
+					Location spawnLoc = new Location(l.getWorld(), rotator.getLocation().getX() + Math.sin(rotator.getHeadPose().getY()) * i * -1, rotator.getLocation().getY() + 1.5, rotator.getLocation().getZ() + Math.cos(rotator.getHeadPose().getY()) * i);
 					
-					b.getWorld().spigot().playEffect(spawnLoc, Effect.SPLASH, 0, 0, 0, 0, 0, 0, 3, 10);
+					l.getWorld().spigot().playEffect(spawnLoc, Effect.SPLASH, 0, 0, 0, 0, 0, 0, 3, 10);
 					
 				}
 				
