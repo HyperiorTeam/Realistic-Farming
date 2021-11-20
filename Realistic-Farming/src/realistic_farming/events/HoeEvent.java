@@ -8,6 +8,7 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.inventory.ItemStack;
@@ -29,7 +30,7 @@ public class HoeEvent implements Listener {
 			Block b = e.getClickedBlock();
 			ItemStack item = e.getItem();
 			
-			if(b != null && item != null) {
+			if(e.getAction().equals(Action.RIGHT_CLICK_BLOCK) && item != null) {
 				
 				Player p = e.getPlayer();
 				

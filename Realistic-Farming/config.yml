@@ -15,3 +15,5 @@ bone-meal:
   crops-enabled: true #wheat seeds
   pumpkin-stem: true
   melon-stem: true
+
+set-to-dirt-after-seed-break: true
