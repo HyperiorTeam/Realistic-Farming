@@ -20,6 +20,14 @@ public class SprinklerData extends CustomConfig {
 		
 	}
 	
+	public static void removeSprinkler(String id) {
+		
+		getConfig().set(id, null);
+		
+		saveConfig();
+		
+	}
+	
 	public static Set<String> getSprinklers() {
 		
 		return getConfig().getKeys(false);

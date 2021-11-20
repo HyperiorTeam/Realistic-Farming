@@ -3,14 +3,17 @@ package realistic_farming.sprinkler;
 import java.util.Arrays;
 import java.util.UUID;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.EulerAngle;
 
@@ -64,10 +67,21 @@ public class SprinklerUtils {
 		
 	}
 	
+	public static void DestroySprinkler(ArmorStand sprinkler, ArmorStand rotator) {
+		
+		Bukkit.getScheduler().cancelTask(rotator.getMetadata("TaskID").get(0).asInt());
+		
+		sprinkler.remove();
+		rotator.remove();
+		
+	}
+	
 	public static void anim(ArmorStand sprinkler, ArmorStand rotator, Location l) {
 		
-		new BukkitRunnable() {
+		rotator.setMetadata("TaskID", new FixedMetadataValue(RealisticFarming.getInstance(), 
+			new BukkitRunnable() {
 			
+			@SuppressWarnings("deprecation")
 			@Override
 			public void run() {
 				
@@ -81,9 +95,24 @@ public class SprinklerUtils {
 				
 				rotator.setHeadPose(new EulerAngle(rotator.getHeadPose().getX(), rotator.getHeadPose().getY() + 0.05, rotator.getHeadPose().getZ()));
 				
+				int range = RealisticFarming.getInstance().getConfig().getInt("sprinkler.range");
+				
+				for(int x = range * -1; x <= range; x++) {
+					
+					for(int z = range * -1; z <= range; z++) {
+						
+						Block b = l.clone().add(x, -1, z).getBlock();
+						
+						if(b.getType().equals(Material.SOIL) && b.getData() != 7)
+							b.setData((byte) 7);
+						
+					}
+					
+				}
+				
 			}
 			
-		}.runTaskTimerAsynchronously(RealisticFarming.getInstance(), 0, 1);
+		}.runTaskTimerAsynchronously(RealisticFarming.getInstance(), 0, 1).getTaskId()));
 		
 	}
 	

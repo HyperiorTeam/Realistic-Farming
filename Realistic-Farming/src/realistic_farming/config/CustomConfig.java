@@ -52,7 +52,8 @@ abstract class CustomConfig {
     	
     	try {
 			config.save(file);
-		} catch (IOException e) {
+			config.load(file);
+		} catch (IOException | InvalidConfigurationException e) {
 			e.printStackTrace();
 		}
     	

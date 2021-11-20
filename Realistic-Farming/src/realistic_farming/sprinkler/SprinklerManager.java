@@ -2,7 +2,6 @@ package realistic_farming.sprinkler;
 
 import java.util.HashMap;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.ArmorStand;
@@ -23,6 +22,37 @@ public class SprinklerManager {
 		
 	}
 	
+	public static void destroySprinkler(String id) {
+		//Bukkit.getConsoleSender().sendMessage(SprinklerData.getConfig().getKeys(false).toArray()[0].toString());
+		Location l = (Location) SprinklerData.getConfig().get(id + ".location");
+		
+		ArmorStand sprinkler = null, rotator = null;
+		
+		for(Entity e : l.getWorld().getNearbyEntities(l, 1, 1, 1)) {
+			
+			if(e.getCustomName() != null && e.getCustomName().startsWith("Sprinkler ID: ")) {
+				
+				if(((ArmorStand) e).getHelmet().getType().equals(Material.IRON_BLOCK)) {
+					
+					sprinkler = (ArmorStand) e;
+					
+				}else if(((ArmorStand) e).getHelmet().getType().equals(Material.LEVER)) {
+					
+					rotator = (ArmorStand) e;
+					
+				}
+				
+			}
+			
+		}
+		
+		SprinklerUtils.DestroySprinkler(sprinkler, rotator);
+		SprinklerData.removeSprinkler(id);
+		
+		sprinklers.remove(id);
+		
+	}
+	
 	public static void loadSprinklers() {
 		
 		for(String id : SprinklerData.getSprinklers()) {
@@ -35,7 +65,7 @@ public class SprinklerManager {
 			
 			for(Entity e : l.getWorld().getNearbyEntities(l, 1, 1, 1)) {
 				
-				if(e.getCustomName().startsWith("Sprinkler ID:")) {
+				if(e.getCustomName() != null && e.getCustomName().startsWith("Sprinkler ID:")) {
 					
 					if(((ArmorStand) e).getHelmet().getType().equals(Material.IRON_BLOCK)) {
 						

@@ -17,3 +17,6 @@ bone-meal:
   melon-stem: true
 
 set-to-dirt-after-seed-break: true
+
+sprinkler:
+  range: 5
