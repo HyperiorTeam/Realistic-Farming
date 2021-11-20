@@ -4,8 +4,10 @@ import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import realistic_farming.commands.RFCommand;
 import realistic_farming.events.FarmInteraction;
 import realistic_farming.events.HoeEvent;
+import realistic_farming.events.SprinklerEvents;
 
 public class RealisticFarming extends JavaPlugin {
 	
@@ -15,6 +17,7 @@ public class RealisticFarming extends JavaPlugin {
 		
 		instance = this;
 		
+		registerCommands();
 		registerEvents();
 		
 		if(!getDataFolder().exists()) {
@@ -33,12 +36,19 @@ public class RealisticFarming extends JavaPlugin {
 		
 	}
 	
+	public void registerCommands() {
+		
+		getCommand("realisticfarming").setExecutor(new RFCommand());
+		
+	}
+	
 	public void registerEvents() {
 		
 		PluginManager pm = Bukkit.getPluginManager();
 		
 		pm.registerEvents(new HoeEvent(), this);
 		pm.registerEvents(new FarmInteraction(), this);
+		pm.registerEvents(new SprinklerEvents(), this);
 		
 	}
 	

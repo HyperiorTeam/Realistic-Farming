@@ -2,3 +2,6 @@ name: RealisticFarming
 version: 1.0
 author: Stexjy
 main: realistic_farming.main.RealisticFarming
+commands:
+  realisticfarming:
+    aliases: [rf]
