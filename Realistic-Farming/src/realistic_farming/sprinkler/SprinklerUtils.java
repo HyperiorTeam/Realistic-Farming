@@ -52,8 +52,6 @@ public class SprinklerUtils {
 	
 	public static void SpawnSprinkler(String id, Location l) {
 		
-		l.getBlock().setType(Material.AIR);
-		
 		ArmorStand sprinkler = (ArmorStand) l.getWorld().spawnEntity(l.clone().add(0.5, -0.70, 0.5), EntityType.ARMOR_STAND);
 		
 		sprinkler.setSmall(true);

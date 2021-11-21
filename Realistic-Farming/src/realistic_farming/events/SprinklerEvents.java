@@ -1,5 +1,6 @@
 package realistic_farming.events;
 
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -28,9 +29,20 @@ public class SprinklerEvents implements Listener {
 					Location l = e.getBlock().getLocation();
 					String id = item.getItemMeta().getLore().get(0).replaceAll("§", "").replace("Sprinkler ID: ", "");
 					
-					SprinklerManager.createSprinkler(id, l);
+					if(SprinklerManager.getSprinklerById(id) == null) {
+						
+						SprinklerManager.createSprinkler(id, l);
+						
+						p.getInventory().remove(e.getItemInHand());
+						
+					}else {
+						
+						p.sendMessage(ChatColor.translateAlternateColorCodes('&', "A sprinkler with this ID already exists!"));
+						
+						
+					}
 					
-					p.getInventory().remove(e.getItemInHand());
+					e.setCancelled(true);
 					
 				}
 				

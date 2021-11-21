@@ -14,7 +14,6 @@ import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import net.md_5.bungee.api.ChatColor;
 import realistic_farming.main.RealisticFarming;
 
 public class HoeEvent implements Listener {
@@ -47,8 +46,8 @@ public class HoeEvent implements Listener {
 							
 							if(!ids.containsKey(p)) {
 								
-								if(RealisticFarming.getInstance().getConfig().getBoolean("hoeing.messages.start.enabled") && RealisticFarming.getInstance().getConfig().getBoolean("hoeing.cancel-on-move"))
-									p.sendMessage(ChatColor.translateAlternateColorCodes('&', RealisticFarming.getInstance().getConfig().getString("hoeing.messages.start.message")));
+								if(RealisticFarming.getInstance().getConfig().getBoolean("hoeing.messages.start.enabled"))
+									RealisticFarming.actionbar.sendMessage(p, RealisticFarming.getInstance().getConfig().getString("hoeing.messages.start.message"));
 								
 								ids.put(p, new BukkitRunnable() {
 									
@@ -86,7 +85,7 @@ public class HoeEvent implements Listener {
 			
 			if(ids.containsKey(p)) {
 				if(RealisticFarming.getInstance().getConfig().getBoolean("hoeing.messages.cancelled.enabled"))
-					p.sendMessage(ChatColor.translateAlternateColorCodes('&', RealisticFarming.getInstance().getConfig().getString("hoeing.messages.cancelled.message")));
+					RealisticFarming.actionbar.sendMessage(p, RealisticFarming.getInstance().getConfig().getString("hoeing.messages.cancelled.message"));
 				
 				Bukkit.getScheduler().cancelTask(ids.get(p));
 				

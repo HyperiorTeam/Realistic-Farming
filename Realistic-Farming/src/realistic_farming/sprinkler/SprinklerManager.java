@@ -87,4 +87,10 @@ public class SprinklerManager {
 		
 	}
 	
+	public static Sprinkler getSprinklerById(String id) {
+		
+		return sprinklers.get(id);
+		
+	}
+	
 }
