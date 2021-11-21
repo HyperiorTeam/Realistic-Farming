@@ -60,7 +60,7 @@ public class HoeEvent implements Listener {
 										
 									}
 									
-								}.runTaskLater(RealisticFarming.getInstance(), RealisticFarming.getInstance().getConfig().getInt("hoeing.time") * 20).getTaskId());
+								}.runTaskLater(RealisticFarming.getInstance(), (long) (RealisticFarming.getInstance().getConfig().getDouble("hoeing.time") * 20)).getTaskId());
 								
 							}
 							

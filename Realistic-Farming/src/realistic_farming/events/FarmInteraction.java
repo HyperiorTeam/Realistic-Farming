@@ -31,7 +31,7 @@ public class FarmInteraction implements Listener {
 				
 			}
 			
-		}else if(e.getAction().equals(Action.LEFT_CLICK_BLOCK) && RealisticFarming.getInstance().getConfig().getBoolean("set-to-dirt-after-seed-break")) {
+		}else if(e.getAction().equals(Action.LEFT_CLICK_BLOCK) && RealisticFarming.getInstance().getConfig().getBoolean("hoeing.set-to-dirt-after-seed-break")) {
 			
 			if(b.getType().equals(Material.CROPS) || b.getType().equals(Material.PUMPKIN_STEM) || b.getType().equals(Material.MELON_STEM)) {
 				

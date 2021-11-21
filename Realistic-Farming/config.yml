@@ -1,7 +1,7 @@
 hoeing:
   enabled: true
   cancel-on-move: true
-  time: 5 #in seconds
+  time: 3.5 #in seconds
   messages:
     start:
       enabled: true
@@ -9,18 +9,20 @@ hoeing:
     cancelled:
       enabled: true
       message: "&4You moved, hoeing cancelled!"
+  set-to-dirt-after-seed-break: true
 
 bone-meal:
   enabled: true #note: this won't affect non-farming blocks (ex. saplings)
   crops-enabled: true #wheat seeds
   pumpkin-stem: true
   melon-stem: true
+  carrot: true
+  potato: true
+  beetroot-block: true #only for 1.9+
 
 commands:
-  giveitem:
+  givesprinkler:
     drop-when-inv-full: true #if false it will not give the item at all
-
-set-to-dirt-after-seed-break: true
 
 sprinkler:
   range: 5
