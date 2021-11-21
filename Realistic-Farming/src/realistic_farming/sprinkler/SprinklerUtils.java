@@ -37,7 +37,16 @@ public class SprinklerUtils {
 		
 		item.setItemMeta(meta);
 		
-		p.getInventory().addItem(item);
+		if(p.getInventory().firstEmpty() == -1) {
+			
+			if(RealisticFarming.getInstance().getConfig().getBoolean("commands.giveitem.drop-when-inv-full")) {
+				
+				p.getWorld().dropItemNaturally(p.getLocation(), item);
+				
+			}
+			
+		}else
+			p.getInventory().addItem(item);
 		
 	}
 	

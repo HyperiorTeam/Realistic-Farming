@@ -16,6 +16,10 @@ bone-meal:
   pumpkin-stem: true
   melon-stem: true
 
+commands:
+  giveitem:
+    drop-when-inv-full: true #if false it will not give the item at all
+
 set-to-dirt-after-seed-break: true
 
 sprinkler:
