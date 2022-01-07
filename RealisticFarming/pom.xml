@@ -4,4 +4,9 @@
   <artifactId>RealisticFarming</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <packaging>pom</packaging>
+  
+  <modules>
+  	<module>main</module>
+  </modules>
+  
 </project>
