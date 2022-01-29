@@ -7,6 +7,8 @@
   
   <modules>
   	<module>main</module>
+  	<module>v1_8</module>
+  	<module>versionsInterfaces</module>
   </modules>
   
 </project>

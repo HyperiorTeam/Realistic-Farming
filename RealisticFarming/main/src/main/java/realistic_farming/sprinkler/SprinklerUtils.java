@@ -50,6 +50,7 @@ public class SprinklerUtils {
 		
 	}
 	
+	@SuppressWarnings("deprecation")
 	public static void SpawnSprinkler(String id, Location l) {
 		
 		ArmorStand sprinkler = (ArmorStand) l.getWorld().spawnEntity(l.clone().add(0.5, -0.70, 0.5), EntityType.ARMOR_STAND);

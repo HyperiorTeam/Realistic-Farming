@@ -1,4 +1,4 @@
-package realistic_farming.events;
+package net.hyperior.realisticfarming.v1_8.events;
 
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -7,13 +7,19 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.plugin.Plugin;
 
-import com.mojang.datafixers.optics.Affine;
-
-import a.Af;
 import realistic_farming.main.RealisticFarming;
 
 public class FarmInteraction implements Listener {
+	
+	private Plugin instance;
+	
+	public FarmInteraction(Plugin instance) {
+		
+		this.instance = instance;
+		
+	}
 	
 	@SuppressWarnings("deprecation")
 	@EventHandler
@@ -28,7 +34,7 @@ public class FarmInteraction implements Listener {
 				
 				if(item.getType().equals(Material.INK_SAC) && item.getData().getData() == 15) {
 					
-					RealisticFarming.farmInteraction.boneMeal(e);
+					//RealisticFarming.farmInteraction.boneMeal(e);
 					
 				}
 				
@@ -38,7 +44,7 @@ public class FarmInteraction implements Listener {
 			
 			if(b.getType().equals(Material.CROPS) || b.getType().equals(Material.PUMPKIN_STEM) || b.getType().equals(Material.MELON_STEM)) {
 				
-				RealisticFarming.farmInteraction.setToDirt(b);
+				//RealisticFarming.farmInteraction.setToDirt(b);
 				
 			}
 			
